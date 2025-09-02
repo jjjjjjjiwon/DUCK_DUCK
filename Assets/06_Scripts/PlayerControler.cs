@@ -1,51 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
-//Create Input Actions for player character movement 여기부터
 
-
-public class PlayerControler : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        float horizontal = 0.0f;
-        float vertical = 0.0f;
-
-        if (Keyboard.current.leftArrowKey.isPressed)
-        {
-            horizontal = -1.0f;
-        }
-        else if (Keyboard.current.rightArrowKey.isPressed)
-        {
-            horizontal = 1.0f;
-        }
-        if (Keyboard.current.upArrowKey.isPressed)
-        {
-            vertical = 1.0f;
-        }
-        else if (Keyboard.current.downArrowKey.isPressed)
-        {
-            vertical = -1.0f;
-        }
-
-        Debug.Log(horizontal);
-
-        Debug.Log(vertical);
+  public InputAction MoveAction;
 
 
-        Vector2 position = transform.position;
-        position.x = position.x + 0.1f * horizontal;
-        position.y = position.y + 0.1f * vertical;
-        transform.position = position;
-    }
+  // Start is called before the first frame update
+  void Start()
+  {
+     MoveAction.Enable();   
+  }
+ 
+  // Update is called once per frame
+  void Update()
+  {
+     Vector2 move = MoveAction.ReadValue<Vector2>();
+     Debug.Log(move);
+      Vector2 position = (Vector2)transform.position + move * 3.0f * Time.deltaTime;
+     transform.position = position;
+  }
+
+
 }
