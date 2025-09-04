@@ -6,23 +6,30 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-  public InputAction MoveAction;
+   public InputAction MoveAction;
+   Rigidbody2D rb2d;
+   Vector2 move;
 
 
-  // Start is called before the first frame update
-  void Start()
-  {
-     MoveAction.Enable();   
-  }
- 
-  // Update is called once per frame
-  void Update()
-  {
-     Vector2 move = MoveAction.ReadValue<Vector2>();
+   // Start is called before the first frame update
+   void Start()
+   {
+      MoveAction.Enable();
+      rb2d = GetComponent<Rigidbody2D>();
+   }
+
+
+   // Update is called once per frame
+   void Update()
+   {
+      move = MoveAction.ReadValue<Vector2>();
      Debug.Log(move);
-      Vector2 position = (Vector2)transform.position + move * 3.0f * Time.deltaTime;
-     transform.position = position;
-  }
+   }
 
+   void FixedUpdate()
+   {
+      Vector2 position = (Vector2)rb2d.position + move * 3.0f * Time.deltaTime;
+     rb2d.MovePosition(position);
+   }
 
 }
